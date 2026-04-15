@@ -1,11 +1,9 @@
-language: java
+language: node_js
+node_js:
+  - "16"
 
-jdk:
-  - openjdk22
-  - openjdk23
-
-install:
-  - mvn install -DskipTests=true -B -V
+before_script:
+  - npm install -g html-validate
 
 script:
-  - mvn test
+  - html-validate index.html
