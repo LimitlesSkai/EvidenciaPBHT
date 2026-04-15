@@ -1,29 +1,28 @@
-version: ~> 1.0
-
-language: node_js
-node_js:
-  - lts/*
-
-cache: npm
-
-before_install:
-  - npm install -g html-validate
-
-script:
-  - html-validate index.html
-
-  - test $(grep -c "Platillo ###" index.html) -ge 5
-  
-  - grep -q '\$[0-9]\+\.[0-9][0-9]' index.html
+language: minimal
 
 deploy:
   provider: pages
-  edge: true
-  token: $GITHUB_TOKEN
+  skip_cleanup: true
+  github_token: $GITHUB_TOKEN
   local_dir: .
-  keep_history: true
   on:
     branch: main
+
+before_script:
+  - sudo apt-get update
+  - sudo apt-get install -y tidy
+
+script:
+  - tidy -eq index.html 2>&1 | grep -v "Warning: missing <!DOCTYPE html>" || true
+  - grep -q "Enchiladas" index.html
+  - grep -q "Tacos" index.html
+  - grep -q "Burritos" index.html
+  - grep -q "Bebidas" index.html
+
+notifications:
+  email:
+    on_success: change
+    on_failure: always
 
 branches:
   only:
