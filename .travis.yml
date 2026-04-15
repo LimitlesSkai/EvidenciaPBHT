@@ -1,9 +1,30 @@
+version: ~> 1.0
+
 language: node_js
 node_js:
-  - "16"
+  - lts/*
 
-before_script:
+cache: npm
+
+before_install:
   - npm install -g html-validate
 
 script:
   - html-validate index.html
+
+  - test $(grep -c "Platillo ###" index.html) -ge 5
+  
+  - grep -q '\$[0-9]\+\.[0-9][0-9]' index.html
+
+deploy:
+  provider: pages
+  edge: true
+  token: $GITHUB_TOKEN
+  local_dir: .
+  keep_history: true
+  on:
+    branch: main
+
+branches:
+  only:
+    - main
