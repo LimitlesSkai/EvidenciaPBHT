@@ -1,4 +1,11 @@
-dist: focal
 language: java
-script: echo "Testing"
-install: skip
+
+jdk:
+  - openjdk22
+  - openjdk23
+
+install:
+  - mvn install -DskipTests=true -B -V
+
+script:
+  - mvn test
