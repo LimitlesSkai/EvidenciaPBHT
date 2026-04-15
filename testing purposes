@@ -1,5 +1,0 @@
-# Add a small comment or whitespace change to trigger a build
-echo "<!-- test commit -->" >> index.html
-git add index.html
-git commit -m "Test Travis CI build"
-git push
