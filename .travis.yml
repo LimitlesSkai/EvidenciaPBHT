@@ -7,7 +7,7 @@ deploy:
   local_dir: .
   on:
     branch: main
-
+    
 before_script:
   - sudo apt-get update
   - sudo apt-get install -y tidy
@@ -18,11 +18,6 @@ script:
   - grep -q "Tacos" index.html
   - grep -q "Burritos" index.html
   - grep -q "Bebidas" index.html
-
-notifications:
-  email:
-    on_success: change
-    on_failure: always
 
 branches:
   only:
